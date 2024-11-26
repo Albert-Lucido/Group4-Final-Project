@@ -2,8 +2,8 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import '../App.css';
 
-import Navbar from './Navbar';
-import Sidebar from './Sidebar';
+import Navbar from './EmployeeNavbar';
+import Sidebar from './EmployeeSidebar';
 import Dashboard from './EmployeeDashboard';
 import LeaveRequests from './LeaveRequests';
 import TimesheetEntry from './TimesheetEntry';
@@ -18,8 +18,7 @@ function EmployeeWrap() {
       <div className="main-container">
         <Sidebar />
         <div className="content">
-          <Routes> 
-            
+          <Routes>
             <Route path="/" element={<Dashboard />} />
             <Route path="/leave-requests" element={<LeaveRequests />} />
             <Route path="/timesheet-entry" element={<TimesheetEntry />} />

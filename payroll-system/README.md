@@ -1,3 +1,12 @@
+# NECESSARY PACKAGES TO INSTALL
+npm install react-router-dom
+npm install react-hook-form
+npm install yup
+npm install @hookform/resolvers
+
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
