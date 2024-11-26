@@ -18,7 +18,7 @@ function EmployeeWrap() {
       <div className="main-container">
         <Sidebar />
         <div className="content">
-          <Routes>
+          <Routes> 
             
             <Route path="/" element={<Dashboard />} />
             <Route path="/leave-requests" element={<LeaveRequests />} />
