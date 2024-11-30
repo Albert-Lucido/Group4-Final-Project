@@ -3,6 +3,10 @@ npm install react-router-dom
 npm install react-hook-form
 npm install yup
 npm install @hookform/resolvers
+npm install axios
+npm install dotenv
+
+=======
 
 
 
