@@ -19,6 +19,9 @@ function ManagerSidebar() {
         <li>
           <Link to="/manager/payroll-summary">Payroll Summary</Link>
         </li>
+        <li>
+          <Link to="/">Log Off</Link>
+        </li>
       </ul>
     </div>
   );

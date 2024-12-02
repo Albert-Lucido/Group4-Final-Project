@@ -2,6 +2,7 @@
 const express = require('express');
 const router = express.Router();
 const PersonalDetails = require('../models/PersonalDetails');
+const Employee = require('../models/Employee'); // Import Employee model
 const User = require('../models/user'); // Assuming you have a User model
 const bcrypt = require('bcrypt');
 
@@ -68,6 +69,14 @@ router.post('/register', async (req, res) => {
 
         await personalDetails.save();
 
+        // Check if there's an existing employee record with the same personnelId
+        const existingEmployeeRecord = await Employee.findOne({ personnelId });
+        if (existingEmployeeRecord) {
+            // Update the employee record with the name
+            existingEmployeeRecord.name = `${firstName} ${lastName}`;
+            await existingEmployeeRecord.save(); // Save the updated employee record
+        }
+        
         // Optionally, update the password in the User collection if it was changed
         await User.updateOne({ personnelId }, { password: hashedPassword });
 

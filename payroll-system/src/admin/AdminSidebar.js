@@ -21,6 +21,9 @@ function AdminSidebar() {
         <li>
           <Link to="/admin/system-settings">System Settings</Link>
         </li>
+        <li>
+          <Link to="/">Log Off</Link>
+        </li>
       </ul>
     </div>
   );

@@ -1,5 +1,6 @@
 const express = require('express');
 const PersonalDetails = require('../models/PersonalDetails');
+const Employee = require('../models/Employee'); // Import Employee model
 const User = require('../models/user'); // Ensure this points to your user model
 const router = express.Router();
 const bcrypt = require('bcrypt');
@@ -59,7 +60,7 @@ router.delete('/users/:id', async (req, res) => {
         if (deleteDetails.deletedCount === 0) {
             console.log('No personal details found for this personnel ID.');
         }
-
+        await Employee.deleteOne({ personnelId: user.personnelId });
         // Delete the user from the User collection
         await User.findByIdAndDelete(req.params.id);
         res.json({ message: 'User  and associated personal details deleted' });

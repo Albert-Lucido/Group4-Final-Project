@@ -29,16 +29,21 @@ const PayrollProcessing = () => {
   };
 
   const processPayroll = async () => {
+    if (baseSalary === '' || bonuses === '' || deductions === '') {
+      alert('Please fill in all fields.');
+      return;
+    }
+
     try {
       const employeeData = {
         personnelId: selectedEmployee,
-        baseSalary: baseSalary,
-        bonuses: bonuses,
-        deductions: deductions,
+        baseSalary: parseFloat(baseSalary), // Convert to float
+        bonuses: parseFloat(bonuses), // Convert to float
+        deductions: parseFloat(deductions), // Convert to float
       };
 
       // Send a POST request to save employee salary details
-      const response = await axios.post('http://localhost:5000/api/employees/salary', employeeData);
+      const response = await axios.post('http://localhost:5000/api/payroll', employeeData);
       console.log('Employee salary details saved:', response.data);
 
       alert("Payroll processed successfully!");
@@ -67,13 +72,15 @@ const PayrollProcessing = () => {
         ))}
       </select>
 
- <h2>Salary Details</h2>
+      <h2>Salary Details</h2>
       <div>
         <label>Base Salary:</label>
         <input
           type="number"
           value={baseSalary}
           onChange={(e) => setBaseSalary(e.target.value)}
+          placeholder="Enter base salary"
+          required
         />
       </div>
       <div>
@@ -82,6 +89,8 @@ const PayrollProcessing = () => {
           type="number"
           value={bonuses}
           onChange={(e) => setBonuses(e.target.value)}
+          placeholder="Enter bonuses"
+          required
         />
       </div>
       <div>
@@ -90,6 +99,8 @@ const PayrollProcessing = () => {
           type="number"
           value={deductions}
           onChange={(e) => setDeductions(e.target.value)}
+          placeholder="Enter deductions"
+          required
         />
       </div>
       <button onClick={processPayroll}>Process Payroll</button>

@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 
 const EmployeeSchema = new mongoose.Schema({
   personnelId: { type: String, required: true, unique: true },
-  name: { type: String, required: true },
+  name: { type: String, required: false },
   role: { type: String, required: true }, // Add role field
   baseSalary: { type: Number, required: true },
   bonuses: { type: Number, default: 0 },
