@@ -1,50 +1,52 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+// c:\Users\Albert Lucido\Desktop\final-project-4-webdevt\payroll-system\src\manager\PayrollSummary.js
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
-function ReportingAnalytics() {
-  const [reports, setReports] = useState([]);
-  const [message, setMessage] = useState('');
+const PayrollSummary = () => {
+  const [payrollData, setPayrollData] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    // Fetch reports when the component mounts
-    const fetchReports = async () => {
+    const fetchPayrollSummary = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/reports'); // Assuming this endpoint returns the reports
-        setReports(response.data);
+        const response = await axios.get('http://localhost:5000/api/payroll-summary');
+        setPayrollData(response.data);
       } catch (error) {
-        console.error('Error fetching reports:', error);
-        setMessage('Error fetching reports.');
+        console.error('Error fetching payroll summary:', error);
       }
     };
 
-    fetchReports();
+    fetchPayrollSummary();
   }, []);
 
   return (
-    <div>
-      <h3>Reporting & Analytics</h3>
-      {message && <p>{message}</p>}
-      <h4>Generated Reports</h4>
+    <div className="payroll-summary-container">
+      <h2>Payroll Summary</h2>
       <table>
         <thead>
           <tr>
-            <th>Report Type</th>
-            <th>Total Amount</th>
-            <th>Details</th>
+            <th>Employee Name</th>
+            <th>Total Hours</th>
+            <th>Base Salary</th>
+            <th>Bonuses</th>
+            <th>Total Pay</th>
           </tr>
         </thead>
         <tbody>
-          {reports.map((report, index) => (
-            <tr key={index}>
-              <td>{report.type}</td>
-              <td>${report.totalAmount.toFixed(2)}</td>
-              <td>{report.details}</td>
+          {payrollData.map((pd) => (
+            <tr key={pd.employeeId}>
+              <td>{pd.employeeName}</td>
+              <td>{pd.totalHours}</td>
+              <td>${pd.baseSalary}</td>
+              <td >${pd.bonuses}</td>
+              <td>${pd.totalPay}</td>
             </tr>
           ))}
         </tbody>
       </table>
     </div>
   );
-}
+};
 
-export default ReportingAnalytics;
+export default PayrollSummary;

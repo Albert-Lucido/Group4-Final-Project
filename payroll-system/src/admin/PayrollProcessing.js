@@ -6,6 +6,7 @@ const PayrollProcessing = () => {
   const [baseSalary, setBaseSalary] = useState('');
   const [bonuses, setBonuses] = useState('');
   const [deductions, setDeductions] = useState('');
+  const [totalHours, setTotalHours] = useState(''); // New state for total hours
   const [selectedEmployee, setSelectedEmployee] = useState('');
   const [selectedRole, setSelectedRole] = useState('');
 
@@ -29,7 +30,7 @@ const PayrollProcessing = () => {
   };
 
   const processPayroll = async () => {
-    if (baseSalary === '' || bonuses === '' || deductions === '') {
+    if (baseSalary === '' || bonuses === '' || deductions === '' || totalHours === '') {
       alert('Please fill in all fields.');
       return;
     }
@@ -40,6 +41,7 @@ const PayrollProcessing = () => {
         baseSalary: parseFloat(baseSalary), // Convert to float
         bonuses: parseFloat(bonuses), // Convert to float
         deductions: parseFloat(deductions), // Convert to float
+        totalHours: parseFloat(totalHours) // Include total hours
       };
 
       // Send a POST request to save employee salary details
@@ -51,6 +53,7 @@ const PayrollProcessing = () => {
       setBaseSalary('');
       setBonuses('');
       setDeductions('');
+      setTotalHours(''); // Reset total hours
       setSelectedEmployee('');
       setSelectedRole(''); // Reset selected role
     } catch (error) {
@@ -71,8 +74,18 @@ const PayrollProcessing = () => {
           </option>
         ))}
       </select>
-
+  
       <h2>Salary Details</h2>
+      <div>
+        <label>Total Hours:</label>
+        <input
+          type="number"
+          value={totalHours}
+          onChange={(e) => setTotalHours(e.target.value)} // Handle total hours input
+          placeholder="Enter total hours"
+          required
+        />
+      </div>
       <div>
         <label>Base Salary:</label>
         <input

@@ -38,43 +38,43 @@ function UserManagement() {
 
   const addUser  = async () => {
     if (editIndex !== null) {
-        const updatedUsers = [...users];
-        updatedUsers[editIndex] = newUser ;
-        setUsers(updatedUsers);
-        setEditIndex(null);
+      const updatedUsers = [...users];
+      updatedUsers[editIndex] = newUser ;
+      setUsers(updatedUsers);
+      setEditIndex(null);
     } else {
-        const exists = await checkExistingUser (newUser .personnelId);
-        if (exists) {
-            setError('Personnel ID already exists. Please use a different ID.'); // Set error message
-            return; // Exit function if ID exists
-        }
+      const exists = await checkExistingUser (newUser.personnelId);
+      if (exists) {
+        setError('Personnel ID already exists. Please use a different ID.'); // Set error message
+        return; // Exit function if ID exists
+      }
 
-        try {
-            console.log('Adding user:', newUser ); // Log the user data being added
-            // Make a POST request to add the new user to the User collection
-            const response = await axios.post('http://localhost:5000/api/users', newUser );
-            console.log('User  added:', response.data); // Log the response from the server
-            setUsers([...users, response.data]);
+      try {
+        console.log('Adding user:', newUser ); // Log the user data being added
+        // Make a POST request to add the new user to the User collection
+        const response = await axios.post('http://localhost:5000/api/users', newUser );
+        console.log('User  added:', response.data); // Log the response from the server
+        setUsers([...users, response.data]);
 
-            // Now save the personnelId in the EmployeeRecords collection
-            const employeeRecordData = {
-                personnelId: newUser .personnelId,
-                name: '', // You can add additional fields here if needed
-                role: newUser .role,
-                baseSalary: 0, // Default or initial values
-                bonuses: 0,
-                deductions: 0,
-                totalHours: 0,
-            };
+        // Now save the personnelId in the EmployeeRecords collection
+        const employeeRecordData = {
+          personnelId: newUser.personnelId,
+          name: '', // You can add additional fields here if needed
+          role: newUser.role,
+          baseSalary: 0, // Default or initial values
+          bonuses: 0,
+          deductions: 0,
+          totalHours: 0,
+        };
 
-            await axios.post('http://localhost:5000/api/employees', employeeRecordData); // Make sure this endpoint exists
+        await axios.post('http://localhost:5000/api/employees', employeeRecordData); // Make sure this endpoint exists
 
-        } catch (error) {
-            console.error('Error adding user:', error.response ? error.response.data : error.message);
-        }
+      } catch (error) {
+        console.error('Error adding user:', error.response ? error.response.data : error.message);
+      }
     }
     setNewUser ({ personnelId: '', role: '', password: '' });
-};
+  };
 
   const editUser  = (index) => {
     setNewUser (users[index]);
@@ -111,30 +111,27 @@ function UserManagement() {
           <option value="">Select Role</option>
           <option value="Employee">Employee</option>
           <option value="Admin">Admin</option>
-          <option value="Manager">Manager</option>
+          < option value="Manager">Manager</option>
         </select>
         <input
           type="password"
           name="password"
-          placeholder="Temporary Password"
+          placeholder="Password"
           value={newUser.password}
           onChange={handleChange}
         />
         <button onClick={addUser }>{editIndex !== null ? 'Update User' : 'Add User'}</button>
         {error && <p className="error-message">{error}</p>} {/* Display error message */}
       </div>
-      <div>
-        <h4>Current Users</h4>
-        <ul>
-          {users.map((user, index) => (
-            <li key={index}>
-              {user.personnelId} - {user.role}
-              <button onClick={() => editUser (index)}>Edit</button>
-              <button onClick={() => removeUser (index)}>Delete</button>
-            </li>
-          ))}
-        </ul>
-      </div>
+      <ul className="user-list">
+        {users.map((user, index) => (
+          <li key={user._id} className="user-item">
+            <span>{user.personnelId} - {user.role}</span>
+            <button onClick={() => editUser (index)}>Edit</button>
+            <button onClick={() => removeUser (index)}>Delete</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }

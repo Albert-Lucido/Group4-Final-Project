@@ -19,12 +19,14 @@ function Login() {
     try {
       const response = await axios.post('http://localhost:5000/api/login', credentials);
       if (response.data.success) {
+        localStorage.setItem('personnelId', credentials.personnelId);
+
         // Check if the role is Employee
         if (response.data.role === 'Employee') {
           // Check if personal details exist for the given personnelId
           if (response.data.personalDetailsExists) {
             // Redirect to employee dashboard if personal details exist
-            navigate('/employee');
+            navigate('/employee/employee-dashboard');
         } else {
             // Redirect to Register if no personal details found
             navigate('/register');
@@ -33,10 +35,10 @@ function Login() {
           // Navigate based on the user role
           switch (response.data.role) {
             case 'Admin':
-              navigate('/admin');
+              navigate('/admin/admin-dashboard');
               break;
             case 'Manager':
-              navigate('/manager');
+              navigate('/manager/manager-dashboard');
               break;
             default:
               setError('Unknown role. Please contact support.');

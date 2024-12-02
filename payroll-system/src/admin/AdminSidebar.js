@@ -19,9 +19,6 @@ function AdminSidebar() {
           <Link to="/admin/reporting-analytics">Reporting & Analytics</Link>
         </li>
         <li>
-          <Link to="/admin/system-settings">System Settings</Link>
-        </li>
-        <li>
           <Link to="/">Log Off</Link>
         </li>
       </ul>

@@ -8,7 +8,6 @@ import AdminDashboard from './AdminDashboard';
 import UserManagement from './UserManagement';
 import PayrollProcessing from './PayrollProcessing';
 import ReportingAnalytics from './ReportingAnalytics';
-import SystemSettings from './SystemSettings';
 
 function AdminWrap() {
   return (
@@ -22,7 +21,6 @@ function AdminWrap() {
             <Route path="user-management" element={<UserManagement />} />
             <Route path="payroll-processing" element={<PayrollProcessing />} />
             <Route path="reporting-analytics" element={<ReportingAnalytics />} />
-            <Route path="system-settings" element={<SystemSettings />} />
           </Routes>
         </div>
       </div>

@@ -1,51 +1,44 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
-import "./css/TimesheetApproval.css";
+// src/manager/TimesheetApproval.js
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
-const TimesheetApproval = ({ timesheets, updateTimesheetStatus }) => {
-  const navigate = useNavigate();
+const TimesheetApproval = () => {
+  const [timesheets, setTimesheets] = useState([]);
+
+  useEffect(() => {
+    const fetchTimesheets = async () => {
+      try {
+        const response = await axios.get('http://localhost:5000/api/timesheets'); // Fetch all timesheets
+        setTimesheets(response.data);
+      } catch (error) {
+        console.error('Error fetching timesheets', error);
+      }
+    };
+
+    fetchTimesheets();
+  }, []);
+
+  const handleApproval = async (id, status) => {
+    try {
+      await axios.patch(`/api/timesheets/${id}`, { status }); // Update timesheet status
+      setTimesheets(timesheets.map(ts => ts._id === id ? { ...ts, status } : ts));
+    } catch (error) {
+      console.error('Error updating timesheet status', error);
+    }
+  };
 
   return (
-    <div className="timesheet-approval-container">
+    <div>
       <h2>Timesheet Approval</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>Employee Name</th>
-            <th>Date</th>
-            <th>Hours Worked</th>
-            <th>Status</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {timesheets?.map((ts) => (
-            <tr key={ts.id}>
-              <td>{ts.employeeName}</td>
-              <td>{ts.date}</td>
-              <td>{ts.hoursWorked}</td>
-              <td>{ts.status}</td>
-              <td>
-                <button
-                  className="bg-green-500"
-                  onClick={() => updateTimesheetStatus(ts.id, "Approved")}
-                >
-                  Approve
-                </button>
-                <button
-                  className="bg-red-500"
-                  onClick={() => updateTimesheetStatus(ts.id, "Rejected")}
-                >
-                  Reject
-                </button>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-      <button className="back-button" onClick={() => navigate("/")}>
-        Back to Dashboard
-      </button>
+      <ul>
+        {timesheets.map(ts => (
+          <li key={ts._id}>
+            {ts.hoursWorked} hours - {ts.taskDescription} 
+            <button onClick={() => handleApproval(ts._id, 'approved')}>Approve</button>
+            <button onClick={() => handleApproval(ts._id, 'rejected')}>Reject</button>
+          </li>
+        ))}
+      </ul>
     </div>
   );
 };

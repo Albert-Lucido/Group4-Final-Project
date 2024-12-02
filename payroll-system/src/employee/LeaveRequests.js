@@ -1,7 +1,9 @@
+// src/employee/LeaveRequests.js
 import React, { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
+import axios from 'axios';
 
 // Get the current date in YYYY-MM-DD format
 const currentDate = new Date().toISOString().split('T')[0];
@@ -12,42 +14,45 @@ const schema = Yup.object().shape({
   startDate: Yup.date()
     .required("Start date is required")
     .nullable()
-    .min(currentDate, "Start date cannot be in the past") // Ensure the start date is not before today
-    .typeError("Start date must be a valid date"), // Ensure the value is a valid date
+    .min(currentDate, "Start date cannot be in the past"),
   endDate: Yup.date()
     .required("End date is required")
     .nullable()
-    .typeError("End date must be a valid date") // Ensure the value is a valid date
-    .test(
-      "endDateAfterStartDate",
-      "End date must be later than start date",
-      function(value) {
-        const { startDate } = this.parent; // Access startDate from the form
-        if (!startDate || !value) return true; // Skip validation if any date is missing
-        return new Date(value) > new Date(startDate); // Compare dates
-      }
-    ),
+    .typeError("End date must be a valid date")
+    .test("endDateAfterStartDate", "End date must be later than start date", function(value) {
+      const { startDate } = this.parent;
+      if (!startDate || !value) return true;
+      return new Date(value) > new Date(startDate);
+    }),
+  reason: Yup.string().required("Reason is required"),
 });
 
 function LeaveRequests() {
-  const [notification, setNotification] = useState("");  // For storing notification message
+  const [notification, setNotification] = useState("");
   const { register, handleSubmit, reset, formState: { errors } } = useForm({
     resolver: yupResolver(schema)
   });
 
-  const onSubmit = data => {
-    // Prevent form submission if there are any errors (e.g., invalid dates)
-    if (Object.keys(errors).length > 0) return;
+  const onSubmit = async (data) => {
+    const employeeId = localStorage.getItem('personnelId'); // Get personnelId from local storage
+    const employeeName = "Employee Name"; // Replace with actual employee name if available
 
-    // Here you can trigger any actions (like submitting data to an API)
-    alert("Leave request submitted!");
-    console.log(data);
+    try {
+      const response = await axios.post('http://localhost:5000/api/leave-requests', {
+        employeeId,
+        employeeName,
+        leaveType: data.leaveType,
+        startDate: data.startDate,
+        endDate: data.endDate,
+        reason: data.reason,
+      });
 
-    // Set the notification
-    setNotification("Your leave request has been successfully submitted.");
-
-    // Reset form fields
-    reset();
+      setNotification("Your leave request has been successfully submitted.");
+      reset(); // Reset form fields
+    } catch (error) {
+      console.error('Error submitting leave request:', error);
+      setNotification('Error submitting leave request. Please try again.');
+    }
   };
 
   return (
@@ -70,6 +75,12 @@ function LeaveRequests() {
           <label>End Date</label>
           <input type="date" {...register("endDate")} />
           <p>{errors.endDate?.message}</p>
+        </div>
+
+        <div>
+          <label>Reason</label>
+          <textarea {...register("reason")} />
+          <p>{errors.reason?.message}</p>
         </div>
 
         <button type="submit">Submit</button>
