@@ -5,6 +5,7 @@ npm install yup
 npm install @hookform/resolvers
 npm install axios
 npm install dotenv
+npm install bcrypt
 
 
 

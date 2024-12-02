@@ -18,11 +18,11 @@ function AdminWrap() {
         <Sidebar />
         <div className="content">
           <Routes>
-            <Route path="/" element={<AdminDashboard />} />
-            <Route path="/user-management" element={<UserManagement />} />
-            <Route path="/payroll-processing" element={<PayrollProcessing />} />
-            <Route path="/reporting-analytics" element={<ReportingAnalytics />} />
-            <Route path="/system-settings" element={<SystemSettings />} />
+            <Route path="admin-dashboard" element={<AdminDashboard />} />
+            <Route path="user-management" element={<UserManagement />} />
+            <Route path="payroll-processing" element={<PayrollProcessing />} />
+            <Route path="reporting-analytics" element={<ReportingAnalytics />} />
+            <Route path="system-settings" element={<SystemSettings />} />
           </Routes>
         </div>
       </div>

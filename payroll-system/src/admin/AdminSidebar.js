@@ -7,19 +7,19 @@ function AdminSidebar() {
     <div className="sidebar">
       <ul>
         <li>
-          <Link to="/">Dashboard</Link>
+          <Link to="/admin/admin-dashboard">Dashboard</Link>
         </li>
         <li>
-          <Link to="/user-management">User  Management</Link>
+          <Link to="/admin/user-management">User  Management</Link>
         </li>
         <li>
-          <Link to="/payroll-processing">Payroll Processing</Link>
+          <Link to="/admin/payroll-processing">Payroll Processing</Link>
         </li>
         <li>
-          <Link to="/reporting-analytics">Reporting & Analytics</Link>
+          <Link to="/admin/reporting-analytics">Reporting & Analytics</Link>
         </li>
         <li>
-          <Link to="/system-settings">System Settings</Link>
+          <Link to="/admin/system-settings">System Settings</Link>
         </li>
       </ul>
     </div>

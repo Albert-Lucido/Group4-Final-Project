@@ -5,6 +5,7 @@ function UserManagement() {
   const [users, setUsers] = useState([]);
   const [newUser , setNewUser ] = useState({ personnelId: '', role: '', password: '' });
   const [editIndex, setEditIndex] = useState(null);
+  const [error, setError] = useState(''); // State for error message
 
   useEffect(() => {
     // Fetch existing users when the component mounts
@@ -22,6 +23,17 @@ function UserManagement() {
   const handleChange = (e) => {
     const { name, value } = e.target;
     setNewUser ({ ...newUser , [name]: value });
+    setError(''); // Clear error message on input change
+  };
+
+  const checkExistingUser  = async (personnelId) => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/users?personnelId=${personnelId}`);
+      return response.data.length > 0; // Return true if user exists
+    } catch (error) {
+      console.error('Error checking existing user:', error);
+      return false; // Assume user does not exist on error
+    }
   };
 
   const addUser  = async () => {
@@ -31,6 +43,12 @@ function UserManagement() {
       setUsers(updatedUsers);
       setEditIndex(null);
     } else {
+      const exists = await checkExistingUser (newUser.personnelId);
+      if (exists) {
+        setError('Personnel ID already exists. Please use a different ID.'); // Set error message
+        return; // Exit function if ID exists
+      }
+
       try {
         console.log('Adding user:', newUser ); // Log the user data being added
         // Make a POST request to add the new user to the EmployeeCollection
@@ -89,6 +107,7 @@ function UserManagement() {
           onChange={handleChange}
         />
         <button onClick={addUser }>{editIndex !== null ? 'Update User' : 'Add User'}</button>
+        {error && <p className="error-message">{error}</p>} {/* Display error message */}
       </div>
       <div>
         <h4>Current Users</h4>
