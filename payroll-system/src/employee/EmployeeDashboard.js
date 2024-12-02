@@ -1,5 +1,6 @@
 import React from 'react';
 import Notification from './Notification';
+import './css/EmployeeDashboard.css';
 
 function Dashboard() {
   return (

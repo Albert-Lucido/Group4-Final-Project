@@ -5,11 +5,12 @@ function Sidebar() {
   return (
     <div className="sidebar">
       <ul>
-        <li><Link to="/">Dashboard</Link></li>
-        <li><Link to="/leave-requests">Leave Requests</Link></li>
-        <li><Link to="/timesheet-entry">Timesheet Entry</Link></li>
-        <li><Link to="/personal-info">Personal Information</Link></li>
-        <li><Link to="/view-benefits">View Benefits</Link></li>
+        <li><Link to="/employee/employee-dashboard">Dashboard</Link></li>
+        <li><Link to="/employee/leave-requests">Leave Requests</Link></li>
+        <li><Link to="/employee/timesheet-entry">Timesheet Entry</Link></li>
+        <li><Link to="/employee/personal-info">Personal Information</Link></li>
+        <li><Link to="/employee/view-benefits">View Benefits</Link></li>
+        <li><Link to="/">Log Off</Link></li>
       </ul>
     </div>
   );

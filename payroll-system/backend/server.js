@@ -25,3 +25,15 @@ app.listen(PORT, () => {
 
 const userRoutes = require('./routes/userRoutes');
 app.use('/api', userRoutes);
+const registerRoutes = require('./routes/registerRoutes');
+app.use('/api', registerRoutes);
+const payslipRoutes = require('./routes/payslipRoutes');
+app.use('/api', payslipRoutes);
+const employeeRoutes = require('./routes/employeeRoutes');
+app.use('/api', employeeRoutes);
+const timesheetRoutes = require('./routes/timesheetRoutes'); // Import timesheet routes
+app.use('/api', timesheetRoutes);
+const leaveRoutes = require('./routes/leaveRoutes');
+app.use('/api', leaveRoutes);
+
+

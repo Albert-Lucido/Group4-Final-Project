@@ -1,0 +1,17 @@
+/* src/employee/EmployeeDashboard.css */
+.employee-dashboard {
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.employee-dashboard h1 {
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.employee-dashboard p {
+    font-size: 1rem;
+    color: #555;
+}

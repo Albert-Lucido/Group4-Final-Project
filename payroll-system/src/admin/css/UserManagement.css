@@ -1,0 +1,67 @@
+button:hover {
+    background-color: #0056b3;
+  }
+  
+  button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+  }
+  
+  /* User list */
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  li {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-bottom: 8px;
+  }
+  
+  li button {
+    margin-left: 10px;
+  }
+  
+  li button:hover {
+    background-color: #e74c3c;
+  }
+  
+  li button:focus {
+    outline: none;
+  }
+  
+  li span {
+    font-size: 1rem;
+    color: #333;
+  }
+  
+  /* Add/Edit user form styling */
+  div > div {
+    margin-bottom: 20px;
+  }
+  
+  select {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+  }
+  
+  input[type="text"]:focus,
+  input[type="password"]:focus,
+  select:focus {
+    border-color: #007bff;
+    outline: none;
+  }
+  
+  button {
+    display: inline-block;
+    width: 100%;
+    text-align: center;
+  }
+  

@@ -1,10 +1,13 @@
-// c:\Users\Albert Lucido\Desktop\final-project-4-webdevt\payroll-system\src\manager\PayrollSummary.js
+// src/manager/PayrollSummary.js
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./css/PayrollSummary.css";
 
 const PayrollSummary = () => {
   const [payrollData, setPayrollData] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -14,11 +17,20 @@ const PayrollSummary = () => {
         setPayrollData(response.data);
       } catch (error) {
         console.error('Error fetching payroll summary:', error);
+        setError('Failed to fetch payroll summary. Please try again later.');
+      } finally {
+        setLoading(false);
       }
     };
 
     fetchPayrollSummary();
   }, []);
+
+  // Render loading state
+  if (loading) return <p>Loading...</p>;
+
+  // Render error state
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="payroll-summary-container">
@@ -38,13 +50,16 @@ const PayrollSummary = () => {
             <tr key={pd.employeeId}>
               <td>{pd.employeeName}</td>
               <td>{pd.totalHours}</td>
-              <td>${pd.baseSalary}</td>
-              <td >${pd.bonuses}</td>
-              <td>${pd.totalPay}</td>
+              <td>${pd.baseSalary.toFixed(2)}</td>
+              <td>${pd.bonuses.toFixed(2)}</td>
+              <td>${pd.totalPay.toFixed(2)}</td>
             </tr>
           ))}
         </tbody>
       </table>
+      <button className="back-button" onClick={() => navigate("/")}>
+        Back to Dashboard
+      </button>
     </div>
   );
 };
